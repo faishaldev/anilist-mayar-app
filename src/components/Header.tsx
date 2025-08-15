@@ -45,7 +45,7 @@ export function Header({ onSearch, onClear, searchLoading }: HeaderProps) {
             </h1>
           </div>
 
-          <div>
+          <div className="w-full md:w-fit">
             <SearchBar
               onSearch={onSearch}
               onClear={onClear}
