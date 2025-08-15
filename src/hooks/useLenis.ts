@@ -9,9 +9,18 @@ export const useLenis = () => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      touchMultiplier: 2,
+      touchMultiplier: 1.5,
       infinite: false,
       prevent: (node) => node.hasAttribute('data-lenis-prevent'),
+      syncTouch: true,
+    });
+
+    const handleTouchStart = () => {
+      if (lenis.isStopped) lenis.start();
+    };
+
+    document.addEventListener('touchstart', handleTouchStart, {
+      passive: true,
     });
 
     lenisRef.current = lenis;
@@ -25,6 +34,7 @@ export const useLenis = () => {
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      document.removeEventListener('touchstart', handleTouchStart);
       lenis.destroy();
       lenisRef.current = null;
     };
