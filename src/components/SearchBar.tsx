@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Search, X } from 'lucide-react';
+import { useState } from 'react';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -31,9 +31,19 @@ export function SearchBar({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative max-w-md mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="
+      relative max-w-md mx-auto
+    "
+    >
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+        <Search
+          className="
+          absolute left-3 top-1/2 transform -translate-y-1/2
+          text-muted-foreground w-4 h-4
+        "
+        />
         <Input
           type="text"
           placeholder={placeholder}
@@ -48,7 +58,10 @@ export function SearchBar({
             variant="ghost"
             size="sm"
             onClick={handleClear}
-            className="absolute right-12 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+            className="
+              absolute right-12 top-1/2 transform -translate-y-1/2
+              h-6 w-6 p-0
+            "
           >
             <X className="w-4 h-4" />
           </Button>
@@ -57,10 +70,18 @@ export function SearchBar({
           type="submit"
           size="sm"
           disabled={!query.trim() || loading}
-          className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8"
+          className="
+            absolute right-1 top-1/2 transform -translate-y-1/2
+            h-8
+          "
         >
           {loading ? (
-            <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            <div
+              className="
+              w-4 h-4 border-2 border-current border-t-transparent
+              rounded-full animate-spin
+            "
+            />
           ) : (
             <Search className="w-4 h-4" />
           )}

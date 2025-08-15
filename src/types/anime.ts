@@ -1,7 +1,7 @@
 export interface AnimeTitle {
   romaji: string;
   english: string;
-  native: string;
+  native?: string;
 }
 
 export interface CoverImage {
@@ -24,17 +24,19 @@ export interface Anime {
   title: AnimeTitle;
   description: string;
   coverImage: CoverImage;
-  bannerImage: string;
+  bannerImage?: string;
   genres: string[];
   averageScore: number;
-  popularity: number;
-  episodes: number;
+  popularity?: number;
+  episodes?: number;
   duration?: number;
-  status: string;
+  status?: string;
   startDate: AnimeDate;
-  endDate: AnimeDate;
+  endDate?: AnimeDate;
   season?: string;
   seasonYear?: number;
+  format?: string;
+  source?: string;
   studios: {
     nodes: Studio[];
   };

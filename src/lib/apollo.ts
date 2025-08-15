@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 
 const httpLink = createHttpLink({
   uri: 'https://graphql.anilist.co',
