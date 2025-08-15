@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { AnimeModal } from './components/AnimeModal';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { MainContent } from './components/MainContent';
+import { Navigation } from './components/Navigation';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { useAnimeData } from './hooks/useAnimeData';
+import { useAnimeModal } from './hooks/useAnimeModal';
+import { useLenis } from './hooks/useLenis';
+import { useScrollToTop } from './hooks/useScrollToTop';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const { stop, start } = useLenis();
+  const { isVisible, scrollToTop } = useScrollToTop();
+  const { selectedAnime, isModalOpen, handleAnimeClick, closeModal } =
+    useAnimeModal();
+  const {
+    viewMode,
+    loadingMore,
+    handleViewModeChange,
+    handleSearch,
+    handleClearSearch,
+    getCurrentData,
+  } = useAnimeData();
+
+  const currentData = getCurrentData();
+  const currentAnimes = currentData.media;
+  const currentLoading = currentData.loading;
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="min-h-screen bg-background">
+      <Header
+        onSearch={handleSearch}
+        onClear={handleClearSearch}
+        searchLoading={currentLoading && viewMode === 'search'}
+      />
+      <Navigation viewMode={viewMode} onViewModeChange={handleViewModeChange} />
+      <MainContent
+        viewMode={viewMode}
+        currentAnimes={currentAnimes}
+        currentLoading={currentLoading}
+        loadingMore={loadingMore}
+        onAnimeClick={handleAnimeClick}
+      />
+      <AnimeModal
+        anime={selectedAnime}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onLenisStop={stop}
+        onLenisStart={start}
+      />
+      {isVisible && <ScrollToTopButton onClick={scrollToTop} />}
+      <Footer />
+    </div>
+  );
 }
-
-export default App
